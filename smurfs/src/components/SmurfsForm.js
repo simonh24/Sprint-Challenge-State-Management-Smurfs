@@ -1,7 +1,22 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { postSmurf } from "../actions";
+import { Card, TextField, Button } from "@material-ui/core";
+import styled from "styled-components";
+
+const StyledCard = styled(Card)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  margin: 25px 20% 0;
+  padding: 20px 0;
+`;
+
+const StyledTextField = styled(TextField)`
+    width: 30%;
+`;
 
 const SmurfsForm = props => {
 
@@ -9,26 +24,14 @@ const SmurfsForm = props => {
     name: "",
     age: "",
     height: "",
-}
+  }
 
   const [smurfValues, setSmurfValues] = useState(initialSmurfValues);
-
-  // const postNewSmurf = newSmurf => {
-  //   const postSmurf = {
-  //       name: newSmurf.name,
-  //       age: newSmurf.age,
-  //       height: newSmurf.height,
-  //   }
-  //   axios.post("http://localhost:3333/smurfs", postSmurf)
-  //     .then(res => console.log("hi1"))
-  //     .catch(res => console.log("hi2"))
-  //     .finally(setSmurfValues(initialSmurfValues));
-  // }
 
   const handleChanges = evt => {
     const { name, value } = evt.target;
     setSmurfValues({ ...smurfValues, [name]: value });
-}
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -44,15 +47,15 @@ const SmurfsForm = props => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-        <label htmlFor="smurfName">Name: </label>
-        <input type="text" name="name" value={smurfValues.name} onChange={handleChanges} ></input>
-        <label htmlFor="smurfAge">Age: </label>
-        <input type="text" name="age" value={smurfValues.age} onChange={handleChanges} ></input>
-        <label htmlFor="smurfHeight">Height: </label>
-        <input type="text" name="height" value={smurfValues.height} onChange={handleChanges} ></input>
-      <button >Add Smurf</button>
-    </form>
+    <StyledCard onSubmit={handleSubmit}>
+      <StyledTextField type="text" name="name" value={smurfValues.name} onChange={handleChanges} variant="outlined" label="Name"></StyledTextField>
+      <br></br>
+      <StyledTextField type="text" name="age" value={smurfValues.age} onChange={handleChanges} variant="outlined" label="Age"></StyledTextField>
+      <br></br>
+      <StyledTextField type="text" name="height" value={smurfValues.height} onChange={handleChanges} variant="outlined" label="Height"></StyledTextField>
+      <br></br>
+      <Button onClick={handleSubmit} variant="contained" color="secondary">Add Smurf</Button>
+    </StyledCard>
   )
 }
 
